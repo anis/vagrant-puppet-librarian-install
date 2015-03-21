@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Anis Safine']
   spec.email         = ['anis@poensis.fr']
   spec.description   = 'A Vagrant plugin that installs the appropriate Puppet modules on your guest machine, via' \
-                       ' puppet-librarian.'
+                       ' librarian-puppet.'
   spec.summary       = spec.description
   spec.homepage      = 'https://github.com/anis/vagrant-puppet-modules'
   spec.license       = 'MIT'
