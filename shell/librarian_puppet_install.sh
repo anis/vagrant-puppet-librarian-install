@@ -1,19 +1,18 @@
 #!/bin/sh
 
+# No need to go further if librarian-puppet is already installed
+$(which librarian-puppet > /dev/null 2>&1)
+
+if [ "$?" -eq '0' ]; then
+  exit 0
+fi
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Library
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # Installs puppet-librarian
 InstallLibrarianPuppet () {
-  # ensure librarian-puppet is not already installed
-  $(which librarian-puppet > /dev/null 2>&1)
-
-  if [ "$?" -eq '0' ]; then
-    return
-  fi
-
-  # try to install librarian-puppet
   echo 'Attempting to install librarian-puppet'
 
   gem install librarian-puppet --version "$version"
