@@ -30,6 +30,14 @@ module VagrantPlugins
                 end
             end
 
+            action_hook(:install_librarian_puppet, Plugin::ALL_ACTIONS) do |hook|
+                require_relative 'action/install_puppet_modules'
+                require_relative 'action/install_librarian_puppet'
+
+                hook.after(Vagrant::Action::Builtin::Provision, Action::InstallLibrarianPuppet)
+                hook.after(Action::InstallLibrarianPuppet, Action::InstallPuppetModules)
+            end
+
             check_vagrant_version!
         end
     end
