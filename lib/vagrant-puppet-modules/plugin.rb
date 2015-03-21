@@ -39,6 +39,11 @@ module VagrantPlugins
             end
 
             check_vagrant_version!
+
+            config(:puppet_modules) do
+                require_relative 'config'
+                Config
+            end
         end
     end
 end

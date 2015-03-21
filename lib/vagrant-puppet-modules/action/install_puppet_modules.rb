@@ -9,7 +9,7 @@ module VagrantPlugins
                 end
 
                 def call(env)
-                    # do something
+                    env[:ui].info "Installation of puppet modules has not been implemented yet"
                 end
             end
         end
