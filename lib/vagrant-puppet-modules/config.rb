@@ -5,11 +5,12 @@ require 'rubygems/dependency_installer'
 module VagrantPlugins
     module PuppetModules
         class Config < Vagrant.plugin('2', :config)
-            attr_accessor :librarian_version, :install_url
+            attr_accessor :librarian_version, :install_url, :puppetfile_dir
 
             def initialize
                 @librarian_version = UNSET_VALUE
                 @install_url = UNSET_VALUE
+                @puppetfile_dir = UNSET_VALUE
                 @logger = Log4r::Logger.new('vagrantplugins::puppet_modules::config')
             end
 
@@ -21,6 +22,7 @@ module VagrantPlugins
                 end
 
                 @install_url = nil if @install_url == UNSET_VALUE
+                @puppetfile_dir = nil if @puppetfile_dir == UNSET_VALUE
             end
 
             def validate!()
