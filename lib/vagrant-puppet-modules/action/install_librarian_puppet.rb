@@ -17,13 +17,14 @@ module VagrantPlugins
                         @machine.config.puppet_modules.validate!
 
                         desired_version = @machine.config.puppet_modules.librarian_version
-                        if desired_version.nil? || installed_version == desired_version
-                            env[:ui].info "Librarian-puppet is installed or not required"
-                            return
+                        if desired_version.nil?
+                            env[:ui].info "Librarian-puppet is not required, skipping installation..."
+                        elsif installed_version == desired_version
+                            env[:ui].info "Librarian-puppet is already installed at version #{desired_version}"
+                        else
+                            fetch_or_create_install_script(env)
+                            install(desired_version, env)
                         end
-
-                        fetch_or_create_install_script(env)
-                        install(desired_version, env)
                     end
 
                     @app.call(env)
@@ -46,12 +47,12 @@ module VagrantPlugins
                     if windows_guest?
                         # todo
                     else
-                        command = 'echo $(librarian-puppet --version)'
+                        command = 'echo $(librarian-puppet version)'
                     end
 
                     @machine.communicate.sudo(command, opts) do |type, data|
                         if [:stderr, :stdout].include?(type)
-                            version_match = data.match(/^(.+)/)
+                            version_match = data.match(/v(.+)$/)
                             version = version_match.captures[0].strip if version_match
                         end
                     end
