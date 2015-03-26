@@ -16,6 +16,7 @@ InstallLibrarianPuppet () {
   echo 'Attempting to install librarian-puppet'
 
   gem install librarian-puppet --version "$version"
+  gem uninstall librarian-puppet -v ">$version" --force
 
   if [ "$?" -ne '0' ]; then
     echo 'Failed to install librarian-puppet'
